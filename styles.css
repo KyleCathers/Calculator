@@ -22,6 +22,7 @@ body {
 .screen {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     border: solid black 3px;
     width: 450px;
     height: 150px;
@@ -36,11 +37,13 @@ body {
 .topRow {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    vertical-align: bottom;
     height: 40%;
-    width: 100%;
     margin: 0px;
-    border: solid black 1px;
+    width: 90%;
+    padding: 10px 15px 0px 0px;
+    font-size: 35px;
+    color: rgb(53, 53, 53);
 }
 
 .bottomRow {
@@ -48,12 +51,12 @@ body {
     justify-content: flex-end;
     align-items: center;
     height: 60%;
-    width: 100%;
     margin: 0px;
-    font-size: 70px;
-    border: solid black 1px;
+    padding-right: 5px;
+    font-size: 60px;
 }
 
+.row1,
 .row2, 
 .row3, 
 .row4,
@@ -68,6 +71,18 @@ body {
 
 #clear:hover {
     background-color: #c17700;
+}
+
+#backspace {
+    display: flex;
+    align-items: flex-start;
+    background-color: #ff6600;
+    font-size: 70px;
+    padding-top: -30px;
+}
+
+#backspace:hover {
+    background-color: #cb5100;
 }
 
 .row5 {
@@ -101,12 +116,15 @@ body {
     margin: 5px;
     cursor: pointer;
     border-radius: 10px;
+    font-family: 'Ubuntu';
 }
 
 @font-face {
     font-family: 'DSEG7-Classic';
     src: url(../../../../usr/share/fonts/truetype/dseg/DSEG14Classic-Regular.ttf) format('truetype');
-    font-weight: bold;
-    font-style: normal;
-  }
-  
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url(../../../../usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf) format('truetype');
+}
