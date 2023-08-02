@@ -65,39 +65,60 @@ equalsButton.addEventListener('click', () => {
 
 backspaceButton.addEventListener('click', () => {
     if (state == 1) {
+        if (firstOperand == 'NaN' || firstOperand == 'Infinity') {
+            firstOperand = '';
+        }
         firstOperand = firstOperand.slice(0, -1);
-        buttonPressed();
     } else if (state == 3) {
+        if (secondOperand == 'NaN' || secondOperand == 'Infinity') {
+            secondOperand = '';
+        }
         secondOperand = secondOperand.slice(0, -1);
-        buttonPressed();
     } else if (state == 4) {
         // only on non-exponential numbers
+        if (result == 'NaN' || result == 'Infinity') {
+            result = '';
+        }
         if(result.toString().indexOf("e+") == -1) {
             result = result.slice(0, -1);
-            buttonPressed();
         }
     }
+    buttonPressed();
 })
 
 plusMinusButton.addEventListener('click', () => {
     plusMinusPressed();
 })
 
-function operatorPressed(operatorInput) {
+function operatorPressed(operatorInput) { 
+    if(result == '-') { // handle behavior with plus minus button and backspace
+        result = '0';
+    }
+    if(firstOperand == '-') {
+        firstOperand = '0';
+    }
+    if(secondOperand == '-') {
+        secondOperand = '0';
+    }
+
     if (state == 1) {
         state = 2;
         operator = operatorInput;
-        buttonPressed();
     } else if (state == 2) {
         operator = operatorInput;
-        buttonPressed();
+    } else if (state == 3) { // e.g. 3x3 then x again -> goes to 9 x ... skipping state 4
+        result = formatNumber(operate(Number(firstOperand), Number(secondOperand), operator).toString());
+        state = 2;
+        operator = operatorInput;
+        firstOperand = result;
+        secondOperand = '';
     } else if (state == 4) {
         state = 2;
         operator = operatorInput;
         firstOperand = result;
         secondOperand = '';
-        buttonPressed();
     }
+    buttonPressed();
 }
 
 function equalsPressed() {
@@ -105,42 +126,39 @@ function equalsPressed() {
         state = 4;
         result = formatNumber(operate(Number(firstOperand), Number(secondOperand), operator).toString());
         buttonPressed();
-    } else if (state == 'Overflow') {
-        buttonPressed();
     }
 }
 
 function numberPressed(number) {
-    if (state == 0) {
+    if (state == 0) {           // check for leading 0s
         state = 1;
         firstOperand += number;
-        buttonPressed();
-    } else if (state == 1) {
+    } else if (state == 1) {    // bottom row length, check for leading 0s
         if (firstOperand.length < 9) {
             firstOperand += number;
         }
-        buttonPressed();
     } else if (state == 2) {
-        state = 3;
+        state = 3;  
         secondOperand += number;
-        buttonPressed();
-    } else if (state == 3) {
+    } else if (state == 3) {    // bottom row length, top row length, check for leading 0s
         if ((secondOperand.length < 9) & ((firstOperand + operator + secondOperand).length < 14)) {
             secondOperand += number;
         }
-        buttonPressed();
     } else if (state == 4) {
-        buttonPressed(); // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        if (result.length < 9) {
+            result += number;
+        }
     }
+    buttonPressed();
 }
 
 function plusMinusPressed() {
     if (state == 1) {
-        firstOperand = -firstOperand;
+        firstOperand = (-firstOperand).toString();
     } else if (state == 3) {
-        secondOperand = -secondOperand;
+        secondOperand = (-secondOperand).toString();
     } else if (state == 4) {
-        result = -result;
+        result = (-result).toString();
     }
     buttonPressed();
 }
