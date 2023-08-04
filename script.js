@@ -165,6 +165,11 @@ function plusMinusPressed() {
 
 // FSM
 function buttonPressed() {
+    let operator2 = operator;   // times button is having an issue
+    if(operator == 'x') {
+        operator2 = '×';
+    }
+
     if (state == 0) {                           // cleared state
         clearState();
     } else if (state == 1) {                    // first operand state
@@ -175,15 +180,16 @@ function buttonPressed() {
         if (firstOperand == '') {
             firstOperand = 0;
         }
-        screenTopRow.innerHTML = firstOperand + operator;
+        screenTopRow.innerHTML = firstOperand + operator2;
     } else if (state == 3) {                    // second operand state
-        screenTopRow.innerHTML = firstOperand + operator + secondOperand;
+        screenTopRow.innerHTML = firstOperand + operator2 + secondOperand;
         screenBottomRow.innerHTML = secondOperand;
     } else if (state == 4) {
-        screenTopRow.innerHTML = firstOperand + operator + secondOperand + '=';
+        screenTopRow.innerHTML = firstOperand + operator2 + secondOperand + '=';
         screenBottomRow.innerHTML = result;
     }
-    console.log(`state: ${state}, operand1: ${firstOperand}, operator: ${operator}, operand2: ${secondOperand}, result = ${result}`);
+    console.log(`state: ${state}, operand1: ${firstOperand}, operator: ${operator2}, operand2: ${secondOperand}, result = ${result}`);
+    console.log(`top row: ${screenTopRow.innerHTML}, bottom row: ${screenBottomRow.innerHTML}`)
 }
 
 function formatNumber(strNumber) {
