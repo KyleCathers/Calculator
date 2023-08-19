@@ -129,3 +129,9 @@ body {
     font-family: 'Ubuntu';
     src: url(./Ubuntu-R.ttf) format('truetype');
 }
+
+@media (max-width: 525px) {
+    .calculator {
+        transform: scale(var(--scaleRatio));
+    }
+}

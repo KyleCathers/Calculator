@@ -1,3 +1,15 @@
+// set calculator size
+let calculator = document.querySelector(".calculator");
+
+window.addEventListener('resize', () => {
+    let width = window.innerWidth;
+    let scaleRatio = width/550;
+    calculator.style.setProperty("--scaleRatio", scaleRatio);
+});
+
+
+
+
 // state variables
 let firstOperand = '';
 let operator = '';
